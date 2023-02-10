@@ -1,12 +1,12 @@
 package circus;
 
-import circus.animal.Animal;
-import circus.animal.Duck;
-import circus.animal.Parrot;
-import circus.animal.Tiger;
+import circus.animal.*;
 import circus.stuff.Cannon;
 import circus.stuff.Equipment;
 import circus.stuff.Ladder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Circus {
     private static Animal[] animals = {
@@ -41,8 +41,43 @@ public class Circus {
     }
 
     public static void main(String[] args) {
-        makeAnimalsTalk();
+        System.out.println("Number of animals: " + animals.length);
+//        makeAnimalsTalk();
         System.out.println("Total value of animals " + calculateAssetValue(animals));
         System.out.println("Total value of equipments " + calculateAssetValue(equipments));
+
+//        animals[3] = new Parrot("Dolly"); // error because cannot expand the arrya size (fixed size array)
+//        System.out.println("Number of animals: " + animals.length);
+        ArrayList<Animal> animalArrayList = new ArrayList<>(Arrays.asList(animals));
+
+        Duck louie = new Duck("Louie");
+        animalArrayList.add(louie);
+
+        Parrot andy = new Parrot("andy");
+        animalArrayList.add(andy);
+
+        Elephant strongOne = new Elephant("StrongOne");
+        animalArrayList.add(strongOne);
+
+        printAllAnimals(animalArrayList);
+
+        System.out.println("number of animals: " + animalArrayList.size());
+
+        System.out.println("AnimalList before sort: ");
+        printAllAnimals(animalArrayList);
+        System.out.println("Louie is at: " + animalArrayList.indexOf(louie) + 1); // zero based
+        // cannot find the first 3 animals added at the beginning because they were added as array, not this same data structure
+        // if want to find the first 3 animals need to iterate through
+
+        animalArrayList.sort(Animal.AnimalNameComparator); // can make custom comparator for the field that we have
+
+        System.out.println("AnimalList after sort: ");
+        printAllAnimals(animalArrayList);
+    }
+
+    private static void printAllAnimals(ArrayList<Animal> animalArrayList) {
+        for (Animal a : animalArrayList) { // printing the array we created at the beginning of this file
+            System.out.println(a);
+        }
     }
 }
